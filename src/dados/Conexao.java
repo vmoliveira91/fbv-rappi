@@ -11,9 +11,10 @@ public class Conexao {
     public boolean conectar() {
         try {
             // Cada um adiciona seu path
-            String url = "C:\\Users\\VITOR.OLIVEIRA\\Documents\\NetBeansProjects\\fbv-rappi\\rappi-db.db";
-
+            String url = "jdbc:sqlite:C:/Users/VITOR.OLIVEIRA/Documents/NetBeansProjects/fbv-rappi/src/rappi-db.db";
+            
             this.conexao = DriverManager.getConnection(url);
+            
         } catch(SQLException e) {
             System.err.println(e.getMessage());
         }

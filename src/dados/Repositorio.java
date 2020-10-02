@@ -23,7 +23,10 @@ public class Repositorio implements IRepositorio {
     @Override
     public ArrayList<Object> informarTransacoes() {
         // Implementar a lógica aqui
-        return new ArrayList<Object>();
+        this.conexao.conectar();
+        System.out.println("Conectou!");
+        this.conexao.desconectar();
+        return null;//new ArrayList<Object>();
     }
 
     @Override
