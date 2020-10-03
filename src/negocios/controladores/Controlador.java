@@ -2,7 +2,6 @@ package negocios.controladores;
 
 import dados.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Controlador {
     private IRepositorio rep;
@@ -19,8 +18,8 @@ public class Controlador {
         this.rep = rep;
     }
 
-    public boolean inserirTransacao(int usuarioId, double valor, String tipo, String formaPagamento, Date data) {
-        return this.rep.inserirTransacao(usuarioId, valor, tipo, formaPagamento, data);
+    public boolean inserirTransacao(int usuarioId, double valor, String tipo, String formaPagamento) {
+        return this.rep.inserirTransacao(usuarioId, valor, tipo, formaPagamento);
     }
 
     public ArrayList<Object> informarTransacoes() {

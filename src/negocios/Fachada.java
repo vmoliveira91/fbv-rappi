@@ -3,7 +3,6 @@ package negocios;
 import negocios.controladores.Controlador;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Fachada implements IFachada {
     private Controlador cont;
@@ -22,8 +21,8 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public boolean inserirTransacao(int usuarioId, double valor, String tipo, String formaPagamento, Date data) {
-        return this.cont.inserirTransacao(usuarioId, valor, tipo, formaPagamento, data);
+    public boolean inserirTransacao(int usuarioId, double valor, String tipo, String formaPagamento) {
+        return this.cont.inserirTransacao(usuarioId, valor, tipo, formaPagamento);
     }
 
     @Override

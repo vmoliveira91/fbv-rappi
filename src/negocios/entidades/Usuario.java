@@ -7,6 +7,7 @@ public class Usuario {
     private String email;
     private String cpf;
     private int telefone;
+    private NivelState nivel;
 
     public Usuario() {
     }
@@ -49,5 +50,13 @@ public class Usuario {
 
     public void setTelefone(int telefone) {
         this.telefone = telefone;
+    }
+    
+    public NivelState getNivelState() {
+        return this.nivel;
+    }
+    
+    public void mudarNivel(NivelState nivel) {
+        this.nivel = nivel;
     }
 }

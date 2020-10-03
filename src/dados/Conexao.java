@@ -7,15 +7,17 @@ import java.sql.Statement;
 
 public class Conexao {
     private Connection conexao;
-
+    
     public boolean conectar() {
         try {
             // Cada um adiciona seu path
-            String url = "jdbc:sqlite:C:/Users/VITOR.OLIVEIRA/Documents/NetBeansProjects/fbv-rappi/src/rappi-db.db";
+            Class.forName("org.sqlite.JDBC");
+            String url = "jdbc:sqlite:banco/rappi-db.sqlite";
             
             this.conexao = DriverManager.getConnection(url);
+            this.conexao.setAutoCommit(false);
             
-        } catch(SQLException e) {
+        } catch(SQLException | ClassNotFoundException e) {
             System.err.println(e.getMessage());
         }
 
@@ -43,6 +45,14 @@ public class Conexao {
             return this.conexao.createStatement();
         } catch (SQLException e) {
             return null;
+        }
+    }
+    
+    public void commit() {
+        try {
+            this.conexao.commit();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
         }
     }
 }
