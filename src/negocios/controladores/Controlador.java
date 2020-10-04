@@ -32,7 +32,7 @@ public class Controlador {
         return this.rep.informarPontuacao(usuarioId);
     }
 
-    public String informarDadosUsuario(int usuarioId) {
+    public Object[] informarDadosUsuario(int usuarioId) {
         return this.rep.informarDadosUsuario(usuarioId);
     }
     

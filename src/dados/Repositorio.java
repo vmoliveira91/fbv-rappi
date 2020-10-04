@@ -12,6 +12,7 @@ import negocios.entidades.NivelOuroState;
 import negocios.entidades.NivelPrataState;
 import negocios.entidades.NivelState;
 import negocios.entidades.Periodo;
+import negocios.entidades.Profile;
 import negocios.entidades.SituacaoFinalizadoState;
 import negocios.entidades.Transacao;
 import negocios.entidades.TransacaoB;
@@ -196,9 +197,77 @@ public class Repositorio implements IRepositorio {
     }
 
     @Override
-    public String informarDadosUsuario(int usuarioId) {
-        // Implementar a lógica aqui
-        return "Santhi lindo!";
+    public Object[] informarDadosUsuario(int usuarioId) {
+        this.conexao.conectar();
+        
+        Object[] dados = null;
+        Usuario u = null;
+        ArrayList<Beneficio> beneficios = new ArrayList<Beneficio>();
+        
+        ResultSet rs = null;
+        Statement st = null;
+        
+        try {       
+            // Busca um usuário.
+            String selectUsuario = 
+                    "SELECT id, nome, email, cpf, telefone, nivelId "
+                    + "FROM usuario WHERE id = " + usuarioId + ";";
+            
+            st = this.conexao.criarStatement();
+            rs = st.executeQuery(selectUsuario);
+            
+            int uId = rs.getInt("id");
+            String uNome = rs.getString("nome");
+            String uEmail = rs.getString("email");
+            String uCpf = rs.getString("cpf");
+            int uTelefone = rs.getInt("telefone");
+            
+            u = new Usuario();            
+            u.setIdUsuario(uId);
+            u.setNome(uNome);
+            u.setEmail(uEmail);
+            u.setCpf(uCpf);
+            u.setTelefone(uTelefone);            
+                        
+            int idNivel = rs.getInt("nivelId");
+            
+            // Busca o nível do usuário.
+            String selectNivel = "SELECT nome FROM nivel WHERE id = " + idNivel + ";";
+            
+            st = this.conexao.criarStatement();
+            rs = st.executeQuery(selectNivel);
+            
+            String nivelUsuario = rs.getString(selectNivel);
+            
+            // Busca benefícios do usuário de acordo com seu nível.
+            String listBeneficios = 
+                    "SELECT nome, tipo, valor " +
+                    "FROM nivelBeneficio NB " +
+                    "JOIN beneficio B ON NB.beneficioId = B.id " +
+                    "WHERE NB.nivelId = " + idNivel + ";";
+            
+            st = this.conexao.criarStatement();                   
+            rs = st.executeQuery(listBeneficios);
+            
+            while(rs.next()) {
+                Beneficio ben = new Beneficio(rs.getString("nome"), rs.getString("tipo"), rs.getDouble("valor"));
+                beneficios.add(ben);
+            }
+            
+            // Cria um objeto para armazenar os resultados.
+            dados = new Object[3];
+            dados[0] = u;
+            dados[1] = nivelUsuario;
+            dados[2] = beneficios;
+            
+            st.close();
+            rs.close();
+            this.conexao.desconectar();              
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }            
+        
+        return dados;
     }
     
     @Override

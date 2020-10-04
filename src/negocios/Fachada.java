@@ -37,7 +37,7 @@ public class Fachada implements IFachada {
     };
 
     @Override
-    public String informarDadosUsuario(int usuarioId) {
+    public Object[] informarDadosUsuario(int usuarioId) {
         return this.cont.informarDadosUsuario(usuarioId);
     }
     

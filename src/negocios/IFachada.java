@@ -11,7 +11,7 @@ public interface IFachada {
 
     public int informarPontuacao(int usuarioId);
 
-    public String informarDadosUsuario(int usuarioId);
+    public Object[] informarDadosUsuario(int usuarioId);
     
     public ArrayList<Usuario> listarUsuario();
 }
