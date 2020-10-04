@@ -1,9 +1,9 @@
 package negocios.entidades;
 
 public abstract class NivelState {
-    Nivel nivel;
+    Usuario usuario;
     
-    public Nivel getNivel() {
-        return this.nivel;
+    public NivelState(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

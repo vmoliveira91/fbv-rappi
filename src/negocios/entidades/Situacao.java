@@ -4,7 +4,9 @@ public class Situacao {
     private int idSituacao;
     private String nome;
 
-    public Situacao() {
+    public Situacao(int idSituacao, String nome) {
+        this.idSituacao = idSituacao;
+        this.nome = nome;
     }
 
     public int getIdSituacao() {

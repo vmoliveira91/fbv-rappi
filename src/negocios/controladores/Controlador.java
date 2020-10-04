@@ -1,6 +1,8 @@
 package negocios.controladores;
 
 import dados.*;
+import negocios.entidades.Usuario;
+
 import java.util.ArrayList;
 
 public class Controlador {
@@ -32,5 +34,9 @@ public class Controlador {
 
     public String informarDadosUsuario(int usuarioId) {
         return this.rep.informarDadosUsuario(usuarioId);
+    }
+    
+    public ArrayList<Usuario> listarUsuarios() {
+        return this.rep.listarUsuarios();
     }
 }

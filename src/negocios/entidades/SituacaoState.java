@@ -1,9 +1,9 @@
 package negocios.entidades;
 
 public abstract class SituacaoState {
-    Situacao situacao;
+    Periodo periodo;
     
-    public Situacao getSituacao() {
-        return this.situacao;
+    public SituacaoState(Periodo periodo) {
+        this.periodo = periodo;
     }
 }

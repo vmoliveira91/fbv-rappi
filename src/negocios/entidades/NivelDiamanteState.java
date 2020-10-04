@@ -1,8 +1,8 @@
 package negocios.entidades;
 
 public class NivelDiamanteState extends NivelState {
-    public NivelDiamanteState() {
-        this.nivel.setIdNivel(4);
-        this.nivel.setNome("Diamante");
+    public NivelDiamanteState(Usuario usuario) {
+        super(usuario);
+        usuario.mudarNivel(new Nivel(4, "Diamante"));
     }
 }

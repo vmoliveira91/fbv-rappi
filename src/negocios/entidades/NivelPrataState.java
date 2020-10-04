@@ -1,9 +1,8 @@
 package negocios.entidades;
 
 public class NivelPrataState extends NivelState {
-    public NivelPrataState() {
-        super();
-        this.nivel.setIdNivel(2);
-        this.nivel.setNome("Prata");
+    public NivelPrataState(Usuario usuario) {
+        super(usuario);
+        usuario.mudarNivel(new Nivel(2, "Prata"));
     }
 }

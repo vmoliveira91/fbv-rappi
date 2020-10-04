@@ -1,8 +1,8 @@
 package negocios.entidades;
 
 public class NivelOuroState extends NivelState {
-    public NivelOuroState() {
-        this.nivel.setIdNivel(3);
-        this.nivel.setNome("Ouro");
+    public NivelOuroState(Usuario usuario) {
+        super(usuario);
+        usuario.mudarNivel(new Nivel(3, "Ouro"));
     }
 }

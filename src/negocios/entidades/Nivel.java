@@ -5,7 +5,9 @@ public class Nivel {
     private String nome;
     private Beneficio[] beneficios;
 
-    public Nivel() {
+    public Nivel(int idNivel, String nome) {
+        this.idNivel = idNivel;
+        this.nome = nome;
     }
 
     public int getIdNivel() {

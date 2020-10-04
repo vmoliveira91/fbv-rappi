@@ -109,33 +109,33 @@ public class Repositorio implements IRepositorio {
             if(pontosAtuais + t.getPontos() >= pontosNecessarios) {
                 Periodo p = new Periodo();
                 p.setIdPeriodo(periodoId);
-                p.mudarSituacao(new SituacaoFinalizadoState());
-                
+                SituacaoFinalizadoState sfs = new SituacaoFinalizadoState(p);
+                                
                 Usuario u = new Usuario();
                 u.setIdUsuario(usuarioId);
                 
                 switch(nivelUsuario) {
                     case 1:
-                        u.mudarNivel(new NivelPrataState());
+                        NivelPrataState nps = new NivelPrataState(u);
                         break;
                     case 2:
-                        u.mudarNivel(new NivelOuroState());
+                        NivelOuroState nos = new NivelOuroState(u);
                         break;
                     case 3:
-                        u.mudarNivel(new NivelDiamanteState());
+                        NivelDiamanteState nds = new NivelDiamanteState(u);
                         break;                   
                 }
                 
                 String updatePeriodo = 
                         "UPDATE periodo " +
-                        "SET situacaoId = " + p.getSituacaoState().getSituacao().getIdSituacao() + ", dataConclusao = datetime('now') " +
+                        "SET situacaoId = " + p.getSituacao().getIdSituacao() + ", dataConclusao = datetime('now') " +
                         "WHERE id = " + p.getIdPeriodo() + ";";
                 
                 st.executeUpdate(updatePeriodo);
                 
                 String updateUsuario =
                         "UPDATE usuario " +
-                        "SET nivelId = " + u.getNivelState().getNivel().getIdNivel() + " " +
+                        "SET nivelId = " + u.getNivel().getIdNivel() + " " +
                         "WHERE id = " + u.getIdUsuario();
                 
                 st.executeUpdate(updateUsuario);
@@ -150,7 +150,7 @@ public class Repositorio implements IRepositorio {
             
             st.executeUpdate(insertUsuarioPeriodoTransacao);
             
-            this.conexao.commit();
+            //this.conexao.commit();
             st.close();
             rs.close();
             this.conexao.desconectar();            
@@ -168,8 +168,31 @@ public class Repositorio implements IRepositorio {
 
     @Override
     public int informarPontuacao(int usuarioId) {
-        // Implementar a lógica aqui
-        return 0;
+        this.conexao.conectar();
+       
+        ResultSet rs = null;
+        Statement st = null;
+        
+        int pontos = 0;
+        
+       try {
+           
+        st = this.conexao.criarStatement();
+           
+        String selectPontuacao = 
+                "SELECT SUM(UPT.pontos) pontos\n" +
+                "FROM usuarioPeriodoTransacao UPT \n" +
+                "JOIN periodo P ON UPT.periodoId = P.Id\n" +
+                "JOIN situacao S ON P.situacaoId = S.id AND S.nome = (SELECT nome FROM situacao WHERE nome = 'Atual')\n" +
+                "WHERE UPT.usuarioId = " + usuarioId + "\n" +
+                "GROUP BY P.id" ;
+        rs = st.executeQuery(selectPontuacao);
+        
+        pontos = rs.getInt("pontos");
+       } catch(SQLException e) {
+           System.out.println(e.getMessage());
+       }       
+        return pontos;
     }
 
     @Override
@@ -177,16 +200,29 @@ public class Repositorio implements IRepositorio {
         // Implementar a lógica aqui
         return "Santhi lindo!";
     }
-
-    private NivelState NivelPrataState() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private NivelState NivelOuroState() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private NivelState NivelDiamanteState() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    @Override
+    public ArrayList<Usuario> listarUsuarios(){
+        this.conexao.conectar();
+        
+        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+        
+        ResultSet rs = null;
+        Statement st = null;
+        
+        try {
+            st = this.conexao.criarStatement();
+            String listUsuarios = "SELECT Id, nome FROM usuario";
+            
+            rs = st.executeQuery(listUsuarios);
+            while(rs.next()){
+                Usuario usuario = new Usuario(rs.getInt("Id"),rs.getString("nome"));
+                usuarios.add(usuario);
+            }
+            
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }     
+        return usuarios;
     }
 }

@@ -7,9 +7,14 @@ public class Usuario {
     private String email;
     private String cpf;
     private int telefone;
-    private NivelState nivel;
+    private NivelState state;
+    private Nivel nivel;
 
-    public Usuario() {
+    public Usuario() {}
+    
+    public Usuario(int idUsuario, String nome) {
+        this.idUsuario = idUsuario;
+        this.nome = nome;
     }
 
     public int getIdUsuario() {
@@ -53,10 +58,14 @@ public class Usuario {
     }
     
     public NivelState getNivelState() {
+        return this.state;
+    }
+    
+    public Nivel getNivel() {
         return this.nivel;
     }
     
-    public void mudarNivel(NivelState nivel) {
+    public void mudarNivel(Nivel nivel) {
         this.nivel = nivel;
     }
 }

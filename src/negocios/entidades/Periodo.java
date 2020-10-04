@@ -8,9 +8,11 @@ public class Periodo {
     private Date dataInicio;
     private Date dataConclusao;
     private int pontosNecessarios;
-    private SituacaoState situacao;
+    private SituacaoState state;
+    private Situacao situacao;
 
     public Periodo() {
+        
     }
 
     public int getIdPeriodo() {
@@ -54,10 +56,14 @@ public class Periodo {
     }
     
     public SituacaoState getSituacaoState() {
+        return this.state;
+    }
+    
+    public Situacao getSituacao() {
         return this.situacao;
     }
     
-    public void mudarSituacao(SituacaoState situacao) {
+    public void mudarSituacao(Situacao situacao) {
         this.situacao = situacao;
     }
 }

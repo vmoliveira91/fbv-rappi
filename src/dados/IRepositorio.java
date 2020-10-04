@@ -1,6 +1,7 @@
 package dados;
 
 import java.util.ArrayList;
+import negocios.entidades.Usuario;
 
 public interface IRepositorio {
     public boolean inserirTransacao(int usuarioId, double valor, String tipo, String formaPagamento);
@@ -10,4 +11,6 @@ public interface IRepositorio {
     public int informarPontuacao(int usuarioId);
     
     public String informarDadosUsuario(int usuarioId);
+            
+    public ArrayList<Usuario> listarUsuarios();
 }

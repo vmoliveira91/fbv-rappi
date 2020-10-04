@@ -3,6 +3,7 @@ package negocios;
 import negocios.controladores.Controlador;
 
 import java.util.ArrayList;
+import negocios.entidades.Usuario;
 
 public class Fachada implements IFachada {
     private Controlador cont;
@@ -38,5 +39,10 @@ public class Fachada implements IFachada {
     @Override
     public String informarDadosUsuario(int usuarioId) {
         return this.cont.informarDadosUsuario(usuarioId);
-    } 
+    }
+    
+    @Override
+    public ArrayList<Usuario> listarUsuario() {
+        return this.cont.listarUsuarios();
+    }
 }
